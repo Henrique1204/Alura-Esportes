@@ -1,7 +1,7 @@
 import { auth } from "../config/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
-export async function cadastrar(email, senha, confirmaSenha) {
+export async function cadastrar(email, senha) {
   createUserWithEmailAndPassword(auth, email, senha)
   .then((dadosDoUsuario) => {
     console.log(dadosDoUsuario)

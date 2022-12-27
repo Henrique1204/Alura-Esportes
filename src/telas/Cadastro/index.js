@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
+
+import estilos from './estilos';
+
 import Botao from '../../componentes/Botao';
 import { EntradaTexto } from '../../componentes/EntradaTexto';
-import estilos from './estilos';
+
 import { cadastrar } from '../../servicos/requisicoesFirebase';
 
 

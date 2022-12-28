@@ -72,6 +72,18 @@ const Login = ({ navigation }) => {
     setMensagemError(mensagem);
   };
 
+  const entradas = [
+    {
+      label: 'E-mail',
+      name: 'email',
+    },
+    {
+      label: 'Senha',
+      name: 'senha',
+      secureTextEntry: true,
+    }
+  ];
+
   React.useEffect(() => {
     const estadoUsuario = auth.onAuthStateChanged((usuario) => {
       if (usuario) onNavigateLogin()
@@ -92,22 +104,16 @@ const Login = ({ navigation }) => {
 
   return (
     <SafeAreaView style={estilos.container}>
-      <EntradaTexto 
-        label="E-mail"
-        value={dados.email}
-        onChangeText={onChange('email')}
-        error={statusError === 'email'}
-        messageError={mensagemError}
-      />
-
-      <EntradaTexto
-        label="Senha"
-        value={dados.senha}
-        onChangeText={onChange('senha')}
-        secureTextEntry
-        error={statusError === 'senha'}
-        messageError={mensagemError}
-      />
+      {entradas.map(({ name, ...props}) => (
+        <EntradaTexto
+          key={name}
+          value={dados[name]}
+          onChangeText={onChange(name)}
+          error={statusError === name}
+          messageError={mensagemError}
+          {...props}
+        />
+      ))}
       
       <Botao onPress={realizarLogin}>LOGAR</Botao>
 

@@ -86,33 +86,35 @@ const Cadastro = () => {
     setMensagemError(mensagem);
   };
 
+  const entradas = [
+    {
+      label: 'E-mail',
+      name: 'email',
+    },
+    {
+      label: 'Senha',
+      name: 'senha',
+      secureTextEntry: true,
+    },
+    {
+      label: 'Confirmar Senha',
+      name: 'confirmaSenha',
+      secureTextEntry: true,
+    }
+  ];
+
   return (
     <SafeAreaView style={estilos.container}>
-      <EntradaTexto 
-        label="E-mail"
-        value={dados.email}
-        onChangeText={onChange('email')}
-        error={statusError === 'email'}
-        messageError={mensagemError}
-      />
-
-      <EntradaTexto
-        label="Senha"
-        value={dados.senha}
-        onChangeText={onChange('senha')}
-        secureTextEntry
-        error={statusError === 'senha'}
-        messageError={mensagemError}
-      />
-
-      <EntradaTexto
-        label="Confirmar Senha"
-        value={dados.confirmaSenha}
-        onChangeText={onChange('confirmaSenha')}
-        secureTextEntry
-        error={statusError === 'confirmarSenha'}
-        messageError={mensagemError}
-      />
+      {entradas.map(({ name, ...props}) => (
+        <EntradaTexto
+          key={name}
+          value={dados[name]}
+          onChangeText={onChange(name)}
+          error={statusError === name}
+          messageError={mensagemError}
+          {...props}
+        />
+      ))}
       
       <Botao onPress={() => realizarCadastro()}>CADASTRAR</Botao>
 

@@ -1,5 +1,10 @@
 import { auth } from '../config/firebase';
-import { createUserWithEmailAndPassword, AuthErrorCodes } from 'firebase/auth';
+
+import {
+  createUserWithEmailAndPassword,
+  AuthErrorCodes,
+  signInWithEmailAndPassword
+} from 'firebase/auth';
 
 
 const tratarErrosFirebase = (error) => {
@@ -17,10 +22,19 @@ const tratarErrosFirebase = (error) => {
 
 export const cadastrar = async (email, senha) => {
   const resultado = await createUserWithEmailAndPassword(auth, email, senha)
-  .then((dadosDoUsuario) => {
-    return { sucesso: true, mensagem: 'Usuário cadastrado com sucesso!' };
-  })
+  .then(() => ({ sucesso: true, mensagem: 'Usuário cadastrado com sucesso!' }))
   .catch(tratarErrosFirebase);
+
+  return {
+    sucesso: Boolean(resultado?.sucesso),
+    mensagem: resultado?.mensagem || resultado,
+  }
+};
+
+export const logar = async (email, senha) => {
+  const resultado = await signInWithEmailAndPassword(auth, email, senha)
+  .then(() => ({ sucesso: true, mensagem: 'Login feito com sucesso!' }))
+  .catch(() => "Erro ao logar.");
 
   return {
     sucesso: Boolean(resultado?.sucesso),

@@ -6,9 +6,17 @@ import estilos from './estilos';
 import Botao from '../../componentes/Botao';
 import EntradaTexto from '../../componentes/EntradaTexto';
 
+import { logar } from '../../servicos/requisicoesFirebase';
+
 const Login = ({ navigation }) => {
   const [email, setEmail] = React.useState('');
   const [senha, setSenha] = React.useState('');
+
+  const realizarLogin = async () => {
+    const { sucesso } = await logar(email, senha);
+  
+    if (sucesso) return navigation.navigate('Principal');
+  };
 
   return (
     <View style={estilos.container}>
@@ -24,7 +32,7 @@ const Login = ({ navigation }) => {
         secureTextEntry
       />
       
-      <Botao onPress={() => navigation.navigate('Principal')}>LOGAR</Botao>
+      <Botao onPress={realizarLogin}>LOGAR</Botao>
       <Botao 
         onPress={() => { navigation.navigate('Cadastro') }}
       >

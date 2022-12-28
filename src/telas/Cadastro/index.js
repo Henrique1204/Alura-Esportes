@@ -69,16 +69,16 @@ const Cadastro = () => {
   const realizarCadastro = async () => {
     if (!eEmailValido() || !eSenhaValida() || !eConfirmarSenhaValida()) return;
   
-    const resultado = await cadastrar(email, senha);
+    const { sucesso, mensagem } = await cadastrar(email, senha);
 
-    if (resultado.sucesso) {
+    if (sucesso) {
       setEmail('');
       setSenha('');
       setConfirmaSenha('');
     }
   
     setStatusError('firebase');
-    setMensagemError(resultado.mensagem);
+    setMensagemError(mensagem);
   };
 
   return (

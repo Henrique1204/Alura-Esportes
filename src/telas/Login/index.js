@@ -11,10 +11,13 @@ import { logar } from '../../servicos/requisicoesFirebase';
 import { auth } from '../../config/firebase';
 
 import loading from '../../assets/loading.gif';
+import useForm from '../../hooks/useForm';
 
 const Login = ({ navigation }) => {
-  const [email, setEmail] = React.useState('');
-  const [senha, setSenha] = React.useState('');
+  const [dados, onChange] = useForm({
+    email: '',
+    senha: '',
+  });
 
   const [statusError, setStatusError] = React.useState('');
   const [mensagemError, setMensagemError] = React.useState('');
@@ -29,7 +32,7 @@ const Login = ({ navigation }) => {
   };
 
   const eEmailValido = () => {
-    if (email === '') {
+    if (dados.email === '') {
       setStatusError('email');
       setMensagemError('O e-mail é obrigatório!');
 
@@ -42,7 +45,7 @@ const Login = ({ navigation }) => {
   };
 
   const eSenhaValida = () => {
-    if (senha === '') {
+    if (dados.senha === '') {
       setStatusError('senha');
       setMensagemError('A senha é obrigatória!');
 
@@ -59,7 +62,7 @@ const Login = ({ navigation }) => {
 
     setCarregando(true);
  
-    const { sucesso, mensagem } = await logar(email, senha);
+    const { sucesso, mensagem } = await logar(dados.email, dados.senha);
 
     setCarregando(false);
   
@@ -91,16 +94,16 @@ const Login = ({ navigation }) => {
     <SafeAreaView style={estilos.container}>
       <EntradaTexto 
         label="E-mail"
-        value={email}
-        onChangeText={texto => setEmail(texto)}
+        value={dados.email}
+        onChangeText={onChange('email')}
         error={statusError === 'email'}
         messageError={mensagemError}
       />
 
       <EntradaTexto
         label="Senha"
-        value={senha}
-        onChangeText={texto => setSenha(texto)}
+        value={dados.senha}
+        onChangeText={onChange('senha')}
         secureTextEntry
         error={statusError === 'senha'}
         messageError={mensagemError}

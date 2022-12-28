@@ -8,11 +8,14 @@ import EntradaTexto from '../../componentes/EntradaTexto';
 import Alerta from '../../componentes/Alerta';
 
 import { cadastrar } from '../../servicos/requisicoesFirebase';
+import useForm from '../../hooks/useForm';
 
 const Cadastro = () => {
-  const [email, setEmail] = React.useState('');
-  const [senha, setSenha] = React.useState('');
-  const [confirmaSenha, setConfirmaSenha] = React.useState('');
+  const [dados, onChange] = useForm({
+    email: '',
+    senha: '',
+    confirmaSenha: '',
+  });
 
   const [statusError, setStatusError] = React.useState('');
   const [mensagemError, setMensagemError] = React.useState('');
@@ -23,7 +26,7 @@ const Cadastro = () => {
   };
 
   const eEmailValido = () => {
-    if (email === '') {
+    if (dados.email === '') {
       setStatusError('email');
       setMensagemError('O e-mail é obrigatório!');
 
@@ -36,7 +39,7 @@ const Cadastro = () => {
   }
 
   const eSenhaValida = () => {
-    if (senha === '') {
+    if (dados.senha === '') {
       setStatusError('senha');
       setMensagemError('A senha é obrigatória!');
 
@@ -49,14 +52,14 @@ const Cadastro = () => {
   }
 
   const eConfirmarSenhaValida = () => {
-    if (confirmaSenha === '') {
+    if (dados.confirmaSenha === '') {
       setStatusError('confirmarSenha');
       setMensagemError('A confirmação de senha é obrigatória!');
 
       return false;
     }
   
-    if (confirmaSenha !== senha) {
+    if (dados.confirmaSenha !== senha) {
       setStatusError('confirmarSenha');
       setMensagemError('As senhas precisam ser iguais.');
 
@@ -71,7 +74,7 @@ const Cadastro = () => {
   const realizarCadastro = async () => {
     if (!eEmailValido() || !eSenhaValida() || !eConfirmarSenhaValida()) return;
   
-    const { sucesso, mensagem } = await cadastrar(email, senha);
+    const { sucesso, mensagem } = await cadastrar(dados.email, dados.senha);
 
     if (sucesso) {
       setEmail('');
@@ -87,16 +90,16 @@ const Cadastro = () => {
     <SafeAreaView style={estilos.container}>
       <EntradaTexto 
         label="E-mail"
-        value={email}
-        onChangeText={texto => setEmail(texto)}
+        value={dados.email}
+        onChangeText={onChange('email')}
         error={statusError === 'email'}
         messageError={mensagemError}
       />
 
       <EntradaTexto
         label="Senha"
-        value={senha}
-        onChangeText={texto => setSenha(texto)}
+        value={dados.senha}
+        onChangeText={onChange('senha')}
         secureTextEntry
         error={statusError === 'senha'}
         messageError={mensagemError}
@@ -104,8 +107,8 @@ const Cadastro = () => {
 
       <EntradaTexto
         label="Confirmar Senha"
-        value={confirmaSenha}
-        onChangeText={texto => setConfirmaSenha(texto)}
+        value={dados.confirmaSenha}
+        onChangeText={onChange('confirmaSenha')}
         secureTextEntry
         error={statusError === 'confirmarSenha'}
         messageError={mensagemError}

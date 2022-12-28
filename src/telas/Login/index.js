@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, Image } from 'react-native';
 
 import estilos from './estilos';
 
@@ -10,12 +10,16 @@ import Alerta from '../../componentes/Alerta';
 import { logar } from '../../servicos/requisicoesFirebase';
 import { auth } from '../../config/firebase';
 
+import loading from '../../assets/loading.gif';
+
 const Login = ({ navigation }) => {
   const [email, setEmail] = React.useState('');
   const [senha, setSenha] = React.useState('');
 
   const [statusError, setStatusError] = React.useState('');
   const [mensagemError, setMensagemError] = React.useState('');
+
+  const [carregando, setCarregando] = React.useState(true);
 
   const onNavigateLogin = () => navigation.replace('Principal');
 
@@ -53,7 +57,11 @@ const Login = ({ navigation }) => {
   const realizarLogin = async () => {
     if (!eEmailValido() || !eSenhaValida()) return;
 
+    setCarregando(true);
+ 
     const { sucesso, mensagem } = await logar(email, senha);
+
+    setCarregando(false);
   
     if (sucesso) return onNavigateLogin();
 
@@ -62,10 +70,22 @@ const Login = ({ navigation }) => {
   };
 
   React.useEffect(() => {
-    const estadoUsuario = auth.onAuthStateChanged((usuario) => usuario && onNavigateLogin());
-  
+    const estadoUsuario = auth.onAuthStateChanged((usuario) => {
+      if (usuario) onNavigateLogin()
+      
+      setCarregando(false);
+    });
+
     return () => estadoUsuario();
   }, []);
+
+  if (carregando) {
+    return (
+      <SafeAreaView style={estilos.containerAnimacao}>
+        <Image source={loading} style={estilos.image} />
+      </SafeAreaView>
+    )
+  }
 
   return (
     <SafeAreaView style={estilos.container}>

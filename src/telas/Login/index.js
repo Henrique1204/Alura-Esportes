@@ -12,6 +12,7 @@ import { auth } from '../../config/firebase';
 
 import loading from '../../assets/loading.gif';
 import useForm from '../../hooks/useForm';
+import { eVazio } from '../../utils/validacoes';
 
 const Login = ({ navigation }) => {
   const [dados, onChange] = useForm({
@@ -31,34 +32,28 @@ const Login = ({ navigation }) => {
     setMensagemError('');
   };
 
-  const eEmailValido = () => {
-    if (dados.email === '') {
+  const validarEntradas = () => {
+    if (eVazio(dados.email)) {
       setStatusError('email');
       setMensagemError('O e-mail é obrigatório!');
-
+  
       return false;
     }
   
-    limparErro();
-
-    return true;
-  };
-
-  const eSenhaValida = () => {
-    if (dados.senha === '') {
+    if (eVazio(dados.senha)) {
       setStatusError('senha');
       setMensagemError('A senha é obrigatória!');
 
       return false;
     }
-  
+
     limparErro();
 
     return true;
-  };
+  }
 
   const realizarLogin = async () => {
-    if (!eEmailValido() || !eSenhaValida()) return;
+    if (!validarEntradas()) return;
 
     setCarregando(true);
  

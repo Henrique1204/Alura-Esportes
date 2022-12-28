@@ -9,6 +9,7 @@ import Alerta from '../../componentes/Alerta';
 
 import { cadastrar } from '../../servicos/requisicoesFirebase';
 import useForm from '../../hooks/useForm';
+import { eIgual, eVazio } from '../../utils/validacoes';
 
 const Cadastro = () => {
   const [dados, onChange] = useForm({
@@ -25,54 +26,42 @@ const Cadastro = () => {
     setMensagemError('');
   };
 
-  const eEmailValido = () => {
-    if (dados.email === '') {
+  const validarEntradas = () => {
+    if (eVazio(dados.email)) {
       setStatusError('email');
       setMensagemError('O e-mail é obrigatório!');
-
+  
       return false;
     }
   
-    limparErro();
-
-    return true;
-  }
-
-  const eSenhaValida = () => {
-    if (dados.senha === '') {
+    if (eVazio(dados.senha)) {
       setStatusError('senha');
       setMensagemError('A senha é obrigatória!');
 
       return false;
     }
-  
-    limparErro();
 
-    return true;
-  }
-
-  const eConfirmarSenhaValida = () => {
-    if (dados.confirmaSenha === '') {
+    if (eVazio(dados.confirmaSenha)) {
       setStatusError('confirmarSenha');
       setMensagemError('A confirmação de senha é obrigatória!');
-
+  
       return false;
     }
   
-    if (dados.confirmaSenha !== senha) {
+    if (eIgual(dados.confirmaSenha, dados.senha)) {
       setStatusError('confirmarSenha');
       setMensagemError('As senhas precisam ser iguais.');
-
+  
       return false;
     }
-  
+
     limparErro();
 
     return true;
   }
 
   const realizarCadastro = async () => {
-    if (!eEmailValido() || !eSenhaValida() || !eConfirmarSenhaValida()) return;
+    if (!validarEntradas()) return setError(mensagemNaoValida);
   
     const { sucesso, mensagem } = await cadastrar(dados.email, dados.senha);
 

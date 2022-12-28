@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, View } from 'react-native';
+import { SafeAreaView } from 'react-native';
 
 import estilos from './estilos';
 
@@ -84,7 +84,7 @@ const Cadastro = () => {
   };
 
   return (
-    <View style={estilos.container}>
+    <SafeAreaView style={estilos.container}>
       <EntradaTexto 
         label="E-mail"
         value={email}
@@ -118,7 +118,7 @@ const Cadastro = () => {
         error={statusError === 'firebase'}
         mensagem={mensagemError}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

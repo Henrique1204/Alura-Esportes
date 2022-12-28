@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { SafeAreaView } from 'react-native';
 
 import estilos from './estilos';
 
@@ -68,7 +68,7 @@ const Login = ({ navigation }) => {
   }, []);
 
   return (
-    <View style={estilos.container}>
+    <SafeAreaView style={estilos.container}>
       <EntradaTexto 
         label="E-mail"
         value={email}
@@ -99,7 +99,7 @@ const Login = ({ navigation }) => {
         error={statusError === 'firebase'}
         mensagem={mensagemError}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

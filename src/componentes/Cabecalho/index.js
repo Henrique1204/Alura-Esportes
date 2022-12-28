@@ -3,11 +3,11 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import estilos from './estilos';
 
-const Cabecalho = ({ navigation }) => {
+const Cabecalho = ({ logout }) => {
   return (
     <View style={estilos.container}>
       <Text style={estilos.texto}>Lista de produtos</Text>
-      <TouchableOpacity style={estilos.botao} onPress={() => navigation.replace('Login')}>
+      <TouchableOpacity style={estilos.botao} onPress={logout}>
         <Icon 
           name={'log-out'} 
           size={20} 

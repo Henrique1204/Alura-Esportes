@@ -5,9 +5,9 @@ import estilos from './estilos';
 
 import Botao from '../../componentes/Botao';
 import EntradaTexto from '../../componentes/EntradaTexto';
+import Alerta from '../../componentes/Alerta';
 
 import { cadastrar } from '../../servicos/requisicoesFirebase';
-
 
 const Cadastro = () => {
   const [email, setEmail] = React.useState('');
@@ -77,7 +77,8 @@ const Cadastro = () => {
       setConfirmaSenha('');
     }
   
-    Alert.alert(resultado.mensagem);
+    setStatusError('firebase');
+    setMensagemError(resultado.mensagem);
   };
 
   return (
@@ -109,6 +110,15 @@ const Cadastro = () => {
       />
       
       <Botao onPress={() => realizarCadastro()}>CADASTRAR</Botao>
+
+      <Alerta
+        setError={() => {
+          setStatusError('');
+          setMensagemError('');
+        }}
+        error={statusError === 'firebase'}
+        mensagem={mensagemError}
+      />
     </View>
   );
 };

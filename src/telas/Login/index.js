@@ -8,6 +8,7 @@ import EntradaTexto from '../../componentes/EntradaTexto';
 import Alerta from '../../componentes/Alerta';
 
 import { logar } from '../../servicos/requisicoesFirebase';
+import { auth } from '../../config/firebase';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = React.useState('');
@@ -15,6 +16,8 @@ const Login = ({ navigation }) => {
 
   const [statusError, setStatusError] = React.useState('');
   const [mensagemError, setMensagemError] = React.useState('');
+
+  const onNavigateLogin = () => navigation.replace('Principal');
 
   const limparErro = () => {
     setStatusError('');
@@ -52,12 +55,17 @@ const Login = ({ navigation }) => {
 
     const { sucesso, mensagem } = await logar(email, senha);
   
-    if (sucesso) return navigation.replace('Principal');
+    if (sucesso) return onNavigateLogin();
 
     setStatusError('firebase');
     setMensagemError(mensagem);
-
   };
+
+  React.useEffect(() => {
+    const estadoUsuario = auth.onAuthStateChanged((usuario) => usuario && onNavigateLogin());
+  
+    return () => estadoUsuario();
+  }, []);
 
   return (
     <View style={estilos.container}>

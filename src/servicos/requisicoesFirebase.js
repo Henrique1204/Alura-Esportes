@@ -34,7 +34,7 @@ export const cadastrar = async (email, senha) => {
 export const logar = async (email, senha) => {
   const resultado = await signInWithEmailAndPassword(auth, email, senha)
   .then(() => ({ sucesso: true, mensagem: 'Login feito com sucesso!' }))
-  .catch(() => "Erro ao logar.");
+  .catch(() => ({ sucesso: false, mensagem: 'E-mail ou senha inválidas.' }));
 
   return {
     sucesso: Boolean(resultado?.sucesso),

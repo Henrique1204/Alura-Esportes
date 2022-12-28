@@ -17,6 +17,11 @@ const Cadastro = () => {
   const [statusError, setStatusError] = React.useState('');
   const [mensagemError, setMensagemError] = React.useState('');
 
+  const limparErro = () => {
+    setStatusError('');
+    setMensagemError('');
+  };
+
   const eEmailValido = () => {
     if (email === '') {
       setStatusError('email');
@@ -25,8 +30,7 @@ const Cadastro = () => {
       return false;
     }
   
-    setStatusError('');
-    setMensagemError('');
+    limparErro();
 
     return true;
   }
@@ -39,8 +43,7 @@ const Cadastro = () => {
       return false;
     }
   
-    setStatusError('');
-    setMensagemError('');
+    limparErro();
 
     return true;
   }
@@ -60,8 +63,7 @@ const Cadastro = () => {
       return false;
     }
   
-    setStatusError('');
-    setMensagemError('');
+    limparErro();
 
     return true;
   }
@@ -112,10 +114,7 @@ const Cadastro = () => {
       <Botao onPress={() => realizarCadastro()}>CADASTRAR</Botao>
 
       <Alerta
-        setError={() => {
-          setStatusError('');
-          setMensagemError('');
-        }}
+        setError={limparErro}
         error={statusError === 'firebase'}
         mensagem={mensagemError}
       />

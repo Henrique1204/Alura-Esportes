@@ -52,7 +52,7 @@ const Login = ({ navigation }) => {
 
     const { sucesso, mensagem } = await logar(email, senha);
   
-    if (sucesso) return navigation.navigate('Principal');
+    if (sucesso) return navigation.replace('Principal');
 
     setStatusError('firebase');
     setMensagemError(mensagem);

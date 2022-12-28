@@ -1,14 +1,15 @@
 import React from 'react';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-const Tab = createNativeStackNavigator();
 
 import Login from './telas/Login';
 import Cadastro from './telas/Cadastro';
 import Principal from './telas/Principal';
 
-export default function Rotas() {
+const Tab = createNativeStackNavigator();
+
+const Rotas = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator>
@@ -18,4 +19,6 @@ export default function Rotas() {
       </Tab.Navigator>
     </NavigationContainer>
   );
-}
+};
+
+export default Rotas;

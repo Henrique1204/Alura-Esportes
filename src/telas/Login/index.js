@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
-import Botao from '../../componentes/Botao';
-import { EntradaTexto } from '../../componentes/EntradaTexto';
+
 import estilos from './estilos';
 
-export default function Login({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+import Botao from '../../componentes/Botao';
+import EntradaTexto from '../../componentes/EntradaTexto';
+
+const Login = ({ navigation }) => {
+  const [email, setEmail] = React.useState('');
+  const [senha, setSenha] = React.useState('');
 
   return (
     <View style={estilos.container}>
@@ -30,4 +32,6 @@ export default function Login({ navigation }) {
       </Botao>
     </View>
   );
-}
+};
+
+export default Login;

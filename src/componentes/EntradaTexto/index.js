@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import React from 'react';
 import { TextInput, HelperText } from 'react-native-paper';
+
 import estilos from './estilos';
 
-export function EntradaTexto({ label, value, onChangeText, secureTextEntry, error, messageError }) {
-  const [secureMode, setSecureMode] = useState(secureTextEntry);
+const EntradaTexto = ({ label, value, onChangeText, secureTextEntry, error, messageError }) => {
+  const [secureMode, setSecureMode] = React.useState(secureTextEntry);
 
   return (
     <>
@@ -24,9 +25,14 @@ export function EntradaTexto({ label, value, onChangeText, secureTextEntry, erro
           /> : null
         }
       />
-      {error && <HelperText type="error" visible={error}>
-        {messageError}
-      </HelperText>}
+
+      {error && (
+        <HelperText type="error" visible={error}>
+          {messageError}
+        </HelperText>
+      )}
     </>
   );
-}
+};
+
+export default EntradaTexto;

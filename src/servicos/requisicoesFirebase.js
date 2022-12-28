@@ -1,7 +1,7 @@
-import { auth } from "../config/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../config/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
-export async function cadastrar(email, senha) {
+export const cadastrar = async (email, senha) => {
   createUserWithEmailAndPassword(auth, email, senha)
   .then((dadosDoUsuario) => {
     console.log(dadosDoUsuario)
@@ -9,4 +9,4 @@ export async function cadastrar(email, senha) {
   .catch((error) => {
     console.log(error)
   });
-}
+};

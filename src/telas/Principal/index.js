@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import Cabecalho from '../../componentes/Cabecalho';
-import Produto from '../../componentes/Produtos';
+
 import estilos from './estilos';
 
-export default function Principal({ navigation }) {
+import Cabecalho from '../../componentes/Cabecalho';
+import Produto from '../../componentes/Produtos';
 
+const Principal = ({ navigation }) => {
   return (
     <View style={estilos.container}>
       <Cabecalho navigation={navigation} />
@@ -16,4 +17,6 @@ export default function Principal({ navigation }) {
       <Produto nome="Suplementos" preco="150,00" />
      </View>
   );
-}
+};
+
+export default Principal;

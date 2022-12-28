@@ -1,25 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 
 import estilos from './estilos';
 
 import Botao from '../../componentes/Botao';
-import { EntradaTexto } from '../../componentes/EntradaTexto';
+import EntradaTexto from '../../componentes/EntradaTexto';
 
 import { cadastrar } from '../../servicos/requisicoesFirebase';
 
 
-export default function Cadastro({ navigation }) {  
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [confirmaSenha, setConfirmaSenha] = useState('');
+const Cadastro = () => {
+  const [email, setEmail] = React.useState('');
+  const [senha, setSenha] = React.useState('');
+  const [confirmaSenha, setConfirmaSenha] = React.useState('');
 
-  async function realizarCadastro(){
+  const realizarCadastro = async () => {
     await cadastrar(email, senha, confirmaSenha);
-    setEmail('')
-    setSenha('')
-    setConfirmaSenha('')
-  }
+
+    setEmail('');
+    setSenha('');
+    setConfirmaSenha('');
+  };
 
   return (
     <View style={estilos.container}>
@@ -45,4 +46,6 @@ export default function Cadastro({ navigation }) {
       <Botao onPress={() => realizarCadastro()}>CADASTRAR</Botao>
     </View>
   );
-}
+};
+
+export default Cadastro;
